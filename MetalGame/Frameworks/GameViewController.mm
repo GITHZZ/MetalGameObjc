@@ -2,9 +2,12 @@
 
 #import "GameViewController.h"
 
-@import Metal;
-@import simd;
-@import QuartzCore.CAMetalLayer;
+#import <Metal/Metal.h>
+#import <simd/simd.h>
+#import <QuartzCore/CAMetalLayer.h>
+#import "Transform.h"
+
+using namespace Math;
 
 // The max number of command buffers in flight
 static const NSUInteger g_max_inflight_buffers = 3;
@@ -269,7 +272,7 @@ typedef struct
 {
     // When reshape is called, update the view and projection matricies since this means the view orientation or size changed
     float aspect = fabsf(self.view.bounds.size.width / self.view.bounds.size.height);
-    _projectionMatrix = matrix_from_perspective_fov_aspectLH(65.0f * (M_PI / 180.0f), aspect, 0.1f, 100.0f);
+    _projectionMatrix = matrix_from_translation(65.0f * (M_PI / 180.0f), aspect, 0.1f, 100.0f);
     
     _viewMatrix = matrix_identity_float4x4;
 }
